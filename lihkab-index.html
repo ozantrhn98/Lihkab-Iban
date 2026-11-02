@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f6f8"><title>Ödeme Bilgileri | Cüneyt Koyun</title>
+<style>
+:root{color-scheme:light;--ink:#17202b;--muted:#687383;--line:#e4e8ee;--accent:#1d3557}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;padding:30px 16px;background:#f5f6f8;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;display:flex;justify-content:center}
+main{width:100%;max-width:560px}header{text-align:center;margin:12px 0 26px}.brand{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;margin-bottom:14px;border-radius:16px;background:var(--accent);color:white;font-size:22px;font-weight:800}
+h1{margin:0;font-size:28px}.subtitle{margin:9px 0 0;color:var(--muted);font-size:14px}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:16px;box-shadow:0 8px 24px #1423370b}
+.label{margin:0 0 10px;color:var(--muted);font-size:11px;font-weight:750;letter-spacing:1.1px;text-transform:uppercase}
+.recipient{font-size:17px;line-height:1.45;font-weight:700;margin-bottom:16px;overflow-wrap:anywhere}
+.banktop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}h2{margin:0;font-size:18px}
+.tag{padding:6px 10px;border-radius:999px;background:#eef2f7;color:#40516a;font-size:11px;font-weight:700}
+.ibanlabel{color:var(--muted);font-size:12px;margin-bottom:8px}.iban{padding:14px 13px;border:1px solid var(--line);border-radius:11px;background:#f8fafc;font-family:ui-monospace,monospace;font-size:clamp(14px,3.7vw,17px);line-height:1.5;overflow-wrap:anywhere;user-select:all}
+button{width:100%;min-height:48px;margin-top:13px;padding:12px 16px;border:0;border-radius:11px;background:var(--accent);color:white;font-size:14px;font-weight:700;cursor:pointer}
+button.secondary{background:#eef2f7;color:var(--accent);border:1px solid #e1e7ef}.footer{text-align:center;color:#8993a1;font-size:12px;padding:10px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,18px);padding:12px 17px;border-radius:999px;background:#17202b;color:white;font-size:13px;opacity:0;transition:.2s;pointer-events:none;text-align:center;max-width:calc(100vw - 32px)}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:420px){body{padding:20px 12px}.card{padding:18px}}
+</style></head>
+<body><main>
+<header><div class="brand">C</div><h1>Ödeme Bilgileri</h1><p class="subtitle">Havale / EFT için hesap bilgilerimiz</p></header>
+<section class="card"><p class="label">Alıcı adı</p><div class="recipient">CÜNEYT KOYUN</div>
+<button class="secondary" onclick="copyText('CÜNEYT KOYUN',this,'Alıcı adı kopyalandı')">Alıcı Adını Kopyala</button></section>
+<section class="card"><div class="banktop"><h2>Halkbank</h2><span class="tag">Banka hesabı</span></div>
+<div class="ibanlabel">IBAN</div><div class="iban">TR72 0001 2001 3740 0001 1007 40</div>
+<button onclick="copyText('TR720001200137400001100740',this,'Halkbank IBAN kopyalandı')">IBAN'ı Kopyala</button></section>
+<p class="footer">Ödeme ve banka bilgileri</p></main><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+let timer;
+async function copyText(value,button,message){try{
+if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(value)}
+else{const t=document.createElement('textarea');t.value=value;t.setAttribute('readonly','');t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();t.setSelectionRange(0,t.value.length);const ok=document.execCommand('copy');document.body.removeChild(t);if(!ok)throw Error('copy failed')}
+showToast(message);const old=button.textContent;button.textContent='Kopyalandı ✓';setTimeout(()=>button.textContent=old,1800)
+}catch(e){showToast('Kopyalanamadı. Lütfen metni seçip kopyalayın.')}}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>t.classList.remove('show'),2200)}
+</script></body></html>
